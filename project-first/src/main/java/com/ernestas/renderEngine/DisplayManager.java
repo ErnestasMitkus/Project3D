@@ -18,6 +18,7 @@ public class DisplayManager {
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create(new PixelFormat(), attribs);
             Display.setTitle(TITLE);
+            Display.setLocation(0, 0);
         } catch (LWJGLException e) {
             e.printStackTrace();
         }
