@@ -1,4 +1,4 @@
-package com.ernestas.renderEngine;
+package com.ernestas.models;
 
 public class RawModel {
 
