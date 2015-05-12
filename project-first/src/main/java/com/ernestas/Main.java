@@ -4,6 +4,7 @@ import com.ernestas.renderEngine.DisplayManager;
 import com.ernestas.renderEngine.Loader;
 import com.ernestas.renderEngine.RawModel;
 import com.ernestas.renderEngine.Renderer;
+import com.ernestas.shaders.StaticShader;
 import org.lwjgl.opengl.Display;
 
 public class Main {
@@ -14,6 +15,8 @@ public class Main {
 
         Loader loader = new Loader();
         Renderer renderer = new Renderer();
+
+        StaticShader shader = new StaticShader();
 
         float[] vertices = {
             -0.5f, 0.5f, 0f,    //V0
@@ -31,11 +34,14 @@ public class Main {
 
         while (!Display.isCloseRequested()) {
             renderer.prepare();
+            shader.start();
             renderer.render(model);
+            shader.stop();
             DisplayManager.updateDisplay();
 
         }
 
+        shader.cleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
     }
