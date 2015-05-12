@@ -11,6 +11,7 @@
 
     <properties>
         <lwjgl.version>2.9.3</lwjgl.version>
+        <lwjgl_util.version>2.9.0</lwjgl_util.version>
         <slick.version>1.0.1</slick.version>
     </properties>
 
@@ -26,11 +27,31 @@
                 <version>${lwjgl.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.lwjgl.lwjgl</groupId>
+                <artifactId>lwjgl_util</artifactId>
+                <version>${lwjgl_util.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.slick2d</groupId>
                 <artifactId>slick2d-core</artifactId>
                 <version>${slick.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
