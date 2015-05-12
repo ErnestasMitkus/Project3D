@@ -15,7 +15,7 @@ public class DisplayManager {
             .withForwardCompatible(true)
             .withProfileCore(true)
         ;
-        
+
         try {
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
             Display.create(new PixelFormat(), attribs);
