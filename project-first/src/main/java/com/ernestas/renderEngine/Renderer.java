@@ -4,6 +4,7 @@ import com.ernestas.entities.Entity;
 import com.ernestas.models.RawModel;
 import com.ernestas.models.TexturedModel;
 import com.ernestas.shaders.StaticShader;
+import com.ernestas.textures.ModelTexture;
 import com.ernestas.toolbox.Maths;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.Matrix4f;
@@ -41,6 +42,9 @@ public class Renderer {
         Matrix4f transformationMatrix = Maths.createTransformationMatrix(entity.getPosition(),
                 entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
         shader.loadTransformationMatrix(transformationMatrix);
+
+        ModelTexture texture = texturedModel.getTexture();
+        shader.loadShineVariables(texture.getShineDamper(), texture.getReflectivity());
 
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, texturedModel.getTexture().getID());
