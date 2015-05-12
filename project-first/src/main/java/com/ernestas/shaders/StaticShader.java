@@ -1,6 +1,7 @@
 package com.ernestas.shaders;
 
 import com.ernestas.entities.Camera;
+import com.ernestas.entities.Light;
 import com.ernestas.toolbox.Maths;
 import org.lwjgl.util.vector.Matrix4f;
 
@@ -12,6 +13,8 @@ public class StaticShader extends ShaderProgram {
     private int locationTransformationMatrix;
     private int locationProjectionMatrix;
     private int locationViewMatrix;
+    private int locationLightPosition;
+    private int locationLightColor;
 
     public StaticShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -21,6 +24,7 @@ public class StaticShader extends ShaderProgram {
     protected void bindAttributes() {
         super.bindAttribute(0, "position");
         super.bindAttribute(1, "textureCoords");
+        super.bindAttribute(2, "normal");
     }
 
     @Override
@@ -28,6 +32,13 @@ public class StaticShader extends ShaderProgram {
         locationTransformationMatrix = super.getUniformLocation("transformationMatrix");
         locationProjectionMatrix = super.getUniformLocation("projectionMatrix");
         locationViewMatrix = super.getUniformLocation("viewMatrix");
+        locationLightPosition = super.getUniformLocation("lightPosition");
+        locationLightColor = super.getUniformLocation("lightColor");
+    }
+
+    public void loadLight(Light light) {
+        super.loadVector(locationLightPosition, light.getPosition());
+        super.loadVector(locationLightColor, light.getColor());
     }
 
     public void loadTransformationMatrix(Matrix4f matrix) {
