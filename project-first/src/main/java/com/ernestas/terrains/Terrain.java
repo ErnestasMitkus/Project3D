@@ -3,6 +3,8 @@ package com.ernestas.terrains;
 import com.ernestas.models.RawModel;
 import com.ernestas.renderEngine.Loader;
 import com.ernestas.textures.ModelTexture;
+import com.ernestas.textures.TerrainTexture;
+import com.ernestas.textures.TerrainTexturePack;
 
 public class Terrain {
 
@@ -13,20 +15,24 @@ public class Terrain {
     private float z;
     private RawModel model;
 
-    private ModelTexture texture;
+    private TerrainTexturePack texturePack;
+    private TerrainTexture blendMap;
 
-    public Terrain(int gridX, int gridZ, Loader loader, ModelTexture texture) {
-        this.texture = texture;
+    public Terrain(int gridX, int gridZ, Loader loader, TerrainTexturePack texturePack, TerrainTexture blendMap) {
+        this.texturePack = texturePack;
+        this.blendMap = blendMap;
         this.x = gridX * SIZE;
         this.z = gridZ * SIZE;
         this.model = generateTerrain(loader);
     }
 
 
+    public TerrainTexturePack getTexturePack() {
+        return texturePack;
+    }
 
-
-    public ModelTexture getTexture() {
-        return texture;
+    public TerrainTexture getBlendMap() {
+        return blendMap;
     }
 
     public float getX() {
