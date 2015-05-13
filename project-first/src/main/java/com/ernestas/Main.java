@@ -4,17 +4,17 @@ import com.ernestas.entities.Camera;
 import com.ernestas.entities.Entity;
 import com.ernestas.entities.Light;
 import com.ernestas.entities.Player;
+import com.ernestas.guis.GuiTexture;
+import com.ernestas.renderEngine.GuiRenderer;
 import com.ernestas.models.TexturedModel;
-import com.ernestas.objConverter.ModelData;
 import com.ernestas.objConverter.OBJFileLoader;
 import com.ernestas.renderEngine.*;
-import com.ernestas.models.RawModel;
-import com.ernestas.shaders.StaticShader;
 import com.ernestas.terrains.Terrain;
 import com.ernestas.textures.ModelTexture;
 import com.ernestas.textures.TerrainTexture;
 import com.ernestas.textures.TerrainTexturePack;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import java.util.ArrayList;
@@ -103,6 +103,20 @@ public class Main {
         Player player = new Player(stanfordBunny, new Vector3f(100, 0, -50), 0, 0, 0, 1);
         //************************************************
 
+
+        //**************** GUIS ************************
+        List<GuiTexture> guis = new ArrayList<>();
+        GuiTexture gui = new GuiTexture(loader.loadTexture("socuwan"),
+            new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
+        GuiTexture gui2 = new GuiTexture(loader.loadTexture("thinmatrix"),
+            new Vector2f(0.3f, 0.58f), new Vector2f(0.4f, 0.4f));
+
+        guis.add(gui);
+        guis.add(gui2);
+
+        GuiRenderer guiRenderer = new GuiRenderer(loader);
+        //**********************************************
+
         Camera camera = new Camera(player);
         Light light = new Light(new Vector3f(20000, 40000, 20000), new Vector3f(1, 1, 1));
 
@@ -121,10 +135,14 @@ public class Main {
             }
 
             renderer.render(light, camera);
+
+            guiRenderer.render(guis);
+
             DisplayManager.updateDisplay();
 
         }
 
+        guiRenderer.cleanUp();
         renderer.cleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
