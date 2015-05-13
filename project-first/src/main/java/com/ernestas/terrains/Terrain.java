@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class Terrain {
 
@@ -77,12 +78,12 @@ public class Terrain {
         float answer;
         if (xCoord <= (1-zCoord)) {
             answer = Maths.barryCentric(new Vector3f(0, heights[gridX][gridZ], 0), new Vector3f(1,
-                    heights[gridX + 1][gridZ], 0), new Vector3f(0,
-                    heights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
+                heights[gridX + 1][gridZ], 0), new Vector3f(0,
+                heights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
         } else {
             answer = Maths.barryCentric(new Vector3f(1, heights[gridX + 1][gridZ], 0), new Vector3f(1,
-                    heights[gridX + 1][gridZ + 1], 1), new Vector3f(0,
-                    heights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
+                heights[gridX + 1][gridZ + 1], 1), new Vector3f(0,
+                heights[gridX][gridZ + 1], 1), new Vector2f(xCoord, zCoord));
         }
         return answer;
     }
@@ -158,6 +159,19 @@ public class Terrain {
         height /= MAX_PIXEL_COLOUR / 2f;
         height *= MAX_HEIGHT;
         return height;
+    }
+
+    public static Terrain getCurrentTerrain(List<Terrain> terrains, float worldX, float worldZ) {
+        float gridX = (int) Math.floor(worldX / Terrain.SIZE) * Terrain.SIZE;
+        float gridZ = (int) Math.floor(worldZ / Terrain.SIZE) * Terrain.SIZE;
+        Terrain currentTerrain = null;
+        for (Terrain terrain : terrains) {
+            if (terrain.getX() == gridX && terrain.getZ() == gridZ) {
+                currentTerrain = terrain;
+                break;
+            }
+        }
+        return currentTerrain;
     }
 
 }

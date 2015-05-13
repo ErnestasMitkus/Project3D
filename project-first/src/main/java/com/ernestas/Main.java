@@ -61,7 +61,7 @@ public class Main {
                 new ModelTexture(loader.loadTexture("flower")));
 
         TexturedModel fern = new TexturedModel(loader.loadToVAO(OBJFileLoader.loadOBJ("fern")),
-                new ModelTexture(loader.loadTexture("fern")));
+                new ModelTexture(loader.loadTexture("fern"), 2));
 
         TexturedModel bobble = new TexturedModel(loader.loadToVAO(OBJFileLoader.loadOBJ("lowPolyTree")),
             new ModelTexture(loader.loadTexture("lowPolyTree")));
@@ -76,22 +76,22 @@ public class Main {
         List<Entity> entities = new ArrayList<>();
         Random random = new Random(676452);
         for (int i = 0; i < 400; i++) {
-            if (i % 20 == 0) {
+            if (i % 10 == 0) {
                 float x = random.nextFloat() * 800 - 400;
                 float z = random.nextFloat() * -600;
-                float y = terrain.getHeightOfTerrain(x, z);
-                entities.add(new Entity(fern, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.9f));
+                float y = Terrain.getCurrentTerrain(terrains, x, z).getHeightOfTerrain(x, z);
+                entities.add(new Entity(fern, random.nextInt(4), new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.9f));
             }
             if (i % 5 == 0) {
                 float x = random.nextFloat() * 800 - 400;
                 float z = random.nextFloat() * -600;
-                float y = terrain.getHeightOfTerrain(x, z);
+                float y = Terrain.getCurrentTerrain(terrains, x, z).getHeightOfTerrain(x, z);
                 entities.add(new Entity(bobble, new Vector3f(x, y, z), 0, random.nextFloat() * 360,
                     0, random.nextFloat() * 0.1f + 0.6f));
 
                 x = random.nextFloat() * 800 - 400;
                 z = random.nextFloat() * -600;
-                y = terrain.getHeightOfTerrain(x, z);
+                y = Terrain.getCurrentTerrain(terrains, x, z).getHeightOfTerrain(x, z);
                 entities.add(new Entity(staticModel, new Vector3f(x, y, z), 0, 0, 0, random.nextFloat() * 1 + 4));
             }
         }
@@ -108,7 +108,7 @@ public class Main {
 
         while (!Display.isCloseRequested()) {
             camera.move();
-            player.move(terrains);
+            player.move(Terrain.getCurrentTerrain(terrains, player.getPosition().x, player.getPosition().z));
             renderer.processEntity(player);
 
             for (Terrain terrainObj : terrains) {

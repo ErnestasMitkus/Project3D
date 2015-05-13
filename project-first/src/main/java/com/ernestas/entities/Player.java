@@ -25,19 +25,6 @@ public class Player extends Entity {
         super(model, position, rotX, rotY, rotZ, scale);
     }
 
-    public void move(List<Terrain> terrains) {
-        float gridX = (int) Math.floor(super.getPosition().x / Terrain.SIZE) * Terrain.SIZE;
-        float gridZ = (int) Math.floor(super.getPosition().z / Terrain.SIZE) * Terrain.SIZE;
-        Terrain currentTerrain = null;
-        for (Terrain terrain : terrains) {
-            if (terrain.getX() == gridX && terrain.getZ() == gridZ) {
-                currentTerrain = terrain;
-                break;
-            }
-        }
-        move(currentTerrain);
-    }
-
     public void move(Terrain terrain) {
         checkInputs();
         super.increaseRotation(0, currentTurnSpeed * DisplayManager.getFrameTimeSeconds(), 0);

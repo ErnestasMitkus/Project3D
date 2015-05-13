@@ -4,6 +4,7 @@ import com.ernestas.entities.Camera;
 import com.ernestas.entities.Light;
 import com.ernestas.toolbox.Maths;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 public class StaticShader extends ShaderProgram {
@@ -20,6 +21,8 @@ public class StaticShader extends ShaderProgram {
     private int locationReflectivity;
     private int locationUseFakeLighting;
     private int locationSkyColor;
+    private int locationNumberOfRows;
+    private int locationOffset;
 
     public StaticShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -43,6 +46,16 @@ public class StaticShader extends ShaderProgram {
         locationReflectivity = super.getUniformLocation("reflectivity");
         locationUseFakeLighting = super.getUniformLocation("useFakeLighting");
         locationSkyColor = super.getUniformLocation("skyColor");
+        locationNumberOfRows = super.getUniformLocation("numberOfRows");
+        locationOffset = super.getUniformLocation("offset");
+    }
+
+    public void loadNumberOfRows(int numberOfRows) {
+        super.loadFloat(locationNumberOfRows, numberOfRows);
+    }
+
+    public void loadOffset(float x, float y) {
+        super.load2DVector(locationOffset, new Vector2f(x, y));
     }
 
     public void loadSkyColor(float r, float g, float b) {
