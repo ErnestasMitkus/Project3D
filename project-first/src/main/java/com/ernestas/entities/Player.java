@@ -2,17 +2,18 @@ package com.ernestas.entities;
 
 import com.ernestas.models.TexturedModel;
 import com.ernestas.renderEngine.DisplayManager;
+import com.ernestas.terrains.Terrain;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
+import java.util.List;
+
 public class Player extends Entity {
 
-    private static final float RUN_SPEED = 20;
+    private static final float RUN_SPEED = 20 * 2;
     private static final float TURN_SPEED = 160;
     private static float GRAVITY = -50;
     private static float JUMP_POWER = 30;
-
-    private static final float TERRAIN_HEIGHT = 0;
 
     private float currentSpeed = 0;
     private float currentTurnSpeed = 0;
@@ -24,7 +25,20 @@ public class Player extends Entity {
         super(model, position, rotX, rotY, rotZ, scale);
     }
 
-    public void move() {
+    public void move(List<Terrain> terrains) {
+        float gridX = (int) Math.floor(super.getPosition().x / Terrain.SIZE) * Terrain.SIZE;
+        float gridZ = (int) Math.floor(super.getPosition().z / Terrain.SIZE) * Terrain.SIZE;
+        Terrain currentTerrain = null;
+        for (Terrain terrain : terrains) {
+            if (terrain.getX() == gridX && terrain.getZ() == gridZ) {
+                currentTerrain = terrain;
+                break;
+            }
+        }
+        move(currentTerrain);
+    }
+
+    public void move(Terrain terrain) {
         checkInputs();
         super.increaseRotation(0, currentTurnSpeed * DisplayManager.getFrameTimeSeconds(), 0);
         float distance = currentSpeed * DisplayManager.getFrameTimeSeconds();
@@ -34,10 +48,15 @@ public class Player extends Entity {
 
         upwardsSpeed += GRAVITY * DisplayManager.getFrameTimeSeconds();
         super.increasePosition(0, upwardsSpeed * DisplayManager.getFrameTimeSeconds(), 0);
-        if (super.getPosition().y < TERRAIN_HEIGHT) {
+
+        float terrainHeight = 0f;
+        if (terrain != null) {
+            terrainHeight = terrain.getHeightOfTerrain(super.getPosition().x, super.getPosition().z);
+        }
+        if (super.getPosition().y < terrainHeight) {
             upwardsSpeed = 0;
             isInAir = false;
-            super.getPosition().y = TERRAIN_HEIGHT;
+            super.getPosition().y = terrainHeight;
         }
     }
 

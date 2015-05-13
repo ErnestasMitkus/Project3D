@@ -42,8 +42,11 @@ public class Main {
         TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
 
         List<Terrain> terrains = new ArrayList<>();
-        terrains.add(new Terrain(0, -1, loader, texturePack, blendMap, "heightMap"));
+        Terrain terrain = new Terrain(0, -1, loader, texturePack, blendMap, "heightMap");
         terrains.add(new Terrain(-1, -1, loader, texturePack, blendMap, "heightMap"));
+        terrains.add(new Terrain(-1, 0, loader, texturePack, blendMap, "heightMap"));
+        terrains.add(new Terrain(0, 0, loader, texturePack, blendMap, "heightMap"));
+        terrains.add(terrain);
         //**********************************************************
 
 
@@ -73,19 +76,23 @@ public class Main {
         List<Entity> entities = new ArrayList<>();
         Random random = new Random(676452);
         for (int i = 0; i < 400; i++) {
-            if (i % 7 == 0) {
-                entities.add(new Entity(grass, new Vector3f(random.nextFloat() * 400 - 200, 0,
-                    random.nextFloat() * -400), 0, 0, 0, 1.8f));
-                entities.add(new Entity(flower, new Vector3f(random.nextFloat() * 400 - 200, 0,
-                    random.nextFloat() * -400), 0, 0, 0, 2.3f));
+            if (i % 20 == 0) {
+                float x = random.nextFloat() * 800 - 400;
+                float z = random.nextFloat() * -600;
+                float y = terrain.getHeightOfTerrain(x, z);
+                entities.add(new Entity(fern, new Vector3f(x, y, z), 0, random.nextFloat() * 360, 0, 0.9f));
             }
-            if (i % 3 == 0) {
-                entities.add(new Entity(fern, new Vector3f(random.nextFloat() * 400 - 200, 0,
-                    random.nextFloat() * -400), 0, random.nextFloat() * 800, 0, 0.9f));
-                entities.add(new Entity(bobble, new Vector3f(random.nextFloat() * 800 - 400, 0,
-                    random.nextFloat() * -600), 0, random.nextFloat() * 360, 0, random.nextFloat() * 0.1f + 0.6f));
-                entities.add(new Entity(staticModel, new Vector3f(random.nextFloat() * 800 - 400,
-                    0, random.nextFloat() * -600), 0, 0, 0, random.nextFloat() * 1 + 4));
+            if (i % 5 == 0) {
+                float x = random.nextFloat() * 800 - 400;
+                float z = random.nextFloat() * -600;
+                float y = terrain.getHeightOfTerrain(x, z);
+                entities.add(new Entity(bobble, new Vector3f(x, y, z), 0, random.nextFloat() * 360,
+                    0, random.nextFloat() * 0.1f + 0.6f));
+
+                x = random.nextFloat() * 800 - 400;
+                z = random.nextFloat() * -600;
+                y = terrain.getHeightOfTerrain(x, z);
+                entities.add(new Entity(staticModel, new Vector3f(x, y, z), 0, 0, 0, random.nextFloat() * 1 + 4));
             }
         }
         //************************************************
@@ -101,11 +108,11 @@ public class Main {
 
         while (!Display.isCloseRequested()) {
             camera.move();
-            player.move();
+            player.move(terrains);
             renderer.processEntity(player);
 
-            for (Terrain terrain : terrains) {
-                renderer.processTerrain(terrain);
+            for (Terrain terrainObj : terrains) {
+                renderer.processTerrain(terrainObj);
             }
 
             // render all entities here
