@@ -7,6 +7,7 @@ import com.ernestas.models.TexturedModel;
 import com.ernestas.renderEngine.*;
 import com.ernestas.models.RawModel;
 import com.ernestas.shaders.StaticShader;
+import com.ernestas.terrains.Terrain;
 import com.ernestas.textures.ModelTexture;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
@@ -31,12 +32,18 @@ public class Main {
 
         Light light = new Light(new Vector3f(0, 0, -20), new Vector3f(0.7f, 0.85f, 0.85f));
 
+        Terrain terrain = new Terrain(0, 0, loader, new ModelTexture(loader.loadTexture("doge")));
+        Terrain terrain2 = new Terrain(1, 0, loader, new ModelTexture(loader.loadTexture("doge")));
+
         Camera camera = new Camera();
 
         MasterRenderer renderer = new MasterRenderer();
 
         while (!Display.isCloseRequested()) {
             camera.move();
+
+            renderer.processTerrain(terrain);
+            renderer.processTerrain(terrain2);
 
             // render all entities here
             renderer.processEntity(entity);
