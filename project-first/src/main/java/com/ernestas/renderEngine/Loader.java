@@ -1,6 +1,7 @@
 package com.ernestas.renderEngine;
 
 import com.ernestas.models.RawModel;
+import com.ernestas.objConverter.ModelData;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
@@ -30,6 +31,10 @@ public class Loader {
         storeDataInAttributeList(2, 3, normals);
         unbindVAO();
         return new RawModel(vaoID, indices.length);
+    }
+
+    public RawModel loadToVAO(ModelData data) {
+        return loadToVAO(data.getVertices(), data.getTextureCoords(), data.getNormals(), data.getIndices());
     }
 
     public int loadTexture(String fileName) {

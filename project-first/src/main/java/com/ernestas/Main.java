@@ -4,6 +4,8 @@ import com.ernestas.entities.Camera;
 import com.ernestas.entities.Entity;
 import com.ernestas.entities.Light;
 import com.ernestas.models.TexturedModel;
+import com.ernestas.objConverter.ModelData;
+import com.ernestas.objConverter.OBJFileLoader;
 import com.ernestas.renderEngine.*;
 import com.ernestas.models.RawModel;
 import com.ernestas.shaders.StaticShader;
@@ -28,15 +30,15 @@ public class Main {
         Camera camera = new Camera();
         MasterRenderer renderer = new MasterRenderer();
 
-        RawModel model = OBJLoader.loadObjModel("tree", loader);
+        RawModel model = loader.loadToVAO(OBJFileLoader.loadOBJ("tree"));
         TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("tree")));
 
-        RawModel grassModel = OBJLoader.loadObjModel("grassModel", loader);
+        RawModel grassModel = loader.loadToVAO(OBJFileLoader.loadOBJ("grassModel"));
         TexturedModel grass = new TexturedModel(grassModel, new ModelTexture(loader.loadTexture("grassTexture")));
         grass.getTexture().setHasTransparency(true);
         grass.getTexture().setUseFakeLighting(true);
 
-        RawModel fernModel = OBJLoader.loadObjModel("fern", loader);
+        RawModel fernModel = loader.loadToVAO(OBJFileLoader.loadOBJ("fern"));
         TexturedModel fern = new TexturedModel(fernModel, new ModelTexture(loader.loadTexture("fern")));
         fern.getTexture().setHasTransparency(true);
 
