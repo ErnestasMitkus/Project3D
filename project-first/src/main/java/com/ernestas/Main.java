@@ -114,8 +114,17 @@ public class Main {
         GuiRenderer guiRenderer = new GuiRenderer(loader);
         //**********************************************
 
+
+        //**************** LIGHTS ************************
+        List<Light> lights = new ArrayList<>();
+        Light light = new Light(new Vector3f(0, 10000, -7000), new Vector3f(1, 1, 1));
+        lights.add(light);
+
+        lights.add(new Light(new Vector3f(-200, 10, -200), new Vector3f(10, 1, 1)));
+        lights.add(new Light(new Vector3f(200, 10, 200), new Vector3f(1, 1, 10)));
+        //************************************************
+
         Camera camera = new Camera(player);
-        Light light = new Light(new Vector3f(20000, 40000, 20000), new Vector3f(1, 1, 1));
 
         while (!Display.isCloseRequested()) {
             camera.move();
@@ -131,7 +140,7 @@ public class Main {
                 renderer.processEntity(entity);
             }
 
-            renderer.render(light, camera);
+            renderer.render(lights, camera);
 
             guiRenderer.render(guis);
 
