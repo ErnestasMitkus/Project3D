@@ -98,9 +98,9 @@ public class Main {
         //************************************************
 
         //**************** PLAYER ************************
-        TexturedModel stanfordBunny = new TexturedModel(loader.loadToVAO(OBJFileLoader.loadOBJ("stanfordBunny")),
-                new ModelTexture(loader.loadTexture("white")));
-        Player player = new Player(stanfordBunny, new Vector3f(100, 0, -50), 0, 0, 0, 1);
+        TexturedModel playerTexture = new TexturedModel(loader.loadToVAO(OBJFileLoader.loadOBJ("person")),
+                new ModelTexture(loader.loadTexture("playerTexture")));
+        Player player = new Player(playerTexture, new Vector3f(100, 0, -50), 0, 0, 0, 1);
         //************************************************
 
 
@@ -111,8 +111,8 @@ public class Main {
         GuiTexture gui2 = new GuiTexture(loader.loadTexture("thinmatrix"),
             new Vector2f(0.3f, 0.58f), new Vector2f(0.4f, 0.4f));
 
-        guis.add(gui);
-        guis.add(gui2);
+//        guis.add(gui);
+//        guis.add(gui2);
 
         GuiRenderer guiRenderer = new GuiRenderer(loader);
         //**********************************************
