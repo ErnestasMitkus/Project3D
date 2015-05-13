@@ -28,9 +28,6 @@ public class Main {
         DisplayManager.createDisplay();
 
         Loader loader = new Loader();
-
-        Light light = new Light(new Vector3f(20000, 40000, 20000), new Vector3f(1, 1, 1));
-        Camera camera = new Camera();
         MasterRenderer renderer = new MasterRenderer();
 
 
@@ -98,6 +95,9 @@ public class Main {
                 new ModelTexture(loader.loadTexture("white")));
         Player player = new Player(stanfordBunny, new Vector3f(100, 0, -50), 0, 0, 0, 1);
         //************************************************
+
+        Camera camera = new Camera(player);
+        Light light = new Light(new Vector3f(20000, 40000, 20000), new Vector3f(1, 1, 1));
 
         while (!Display.isCloseRequested()) {
             camera.move();
