@@ -42,8 +42,8 @@ public class Main {
         TerrainTexture blendMap = new TerrainTexture(loader.loadTexture("blendMap"));
 
         List<Terrain> terrains = new ArrayList<>();
-        terrains.add(new Terrain(0, -1, loader, texturePack, blendMap));
-        terrains.add(new Terrain(-1, -1, loader, texturePack, blendMap));
+        terrains.add(new Terrain(0, -1, loader, texturePack, blendMap, "heightMap"));
+        terrains.add(new Terrain(-1, -1, loader, texturePack, blendMap, "heightMap"));
         //**********************************************************
 
 
