@@ -22,7 +22,7 @@ uniform float useFakeLighting;
 uniform float numberOfRows;
 uniform vec2 offset;
 
-const float density = 0.00035; // fog density
+const float density = 0.0035; // fog density
 const float gradient = 5.0;    // fog gradient
 
 void main(void) {

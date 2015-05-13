@@ -17,7 +17,7 @@ uniform mat4 projectionMatrix;
 uniform mat4 viewMatrix;
 uniform vec3 lightPosition[MAX_LIGHTS];
 
-const float density = 0.00035; // fog density
+const float density = 0.0035; // fog density
 const float gradient = 5.0;    // fog gradient
 
 void main(void) {

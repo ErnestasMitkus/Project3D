@@ -66,10 +66,14 @@ public class Main {
         TexturedModel bobble = new TexturedModel(loader.loadToVAO(OBJFileLoader.loadOBJ("lowPolyTree")),
             new ModelTexture(loader.loadTexture("lowPolyTree")));
 
+        TexturedModel lamp = new TexturedModel(loader.loadToVAO(OBJFileLoader.loadOBJ("lamp")),
+            new ModelTexture(loader.loadTexture("lamp")));
+
         grass.getTexture().setHasTransparency(true);
         grass.getTexture().setUseFakeLighting(true);
         flower.getTexture().setHasTransparency(true);
         flower.getTexture().setUseFakeLighting(true);
+        lamp.getTexture().setUseFakeLighting(true);
         fern.getTexture().setHasTransparency(true);
 
 
@@ -100,7 +104,7 @@ public class Main {
         //**************** PLAYER ************************
         TexturedModel playerTexture = new TexturedModel(loader.loadToVAO(OBJFileLoader.loadOBJ("person")),
                 new ModelTexture(loader.loadTexture("playerTexture")));
-        Player player = new Player(playerTexture, new Vector3f(100, 0, -50), 0, 0, 0, 1);
+        Player player = new Player(playerTexture, new Vector3f(153, 5, -274), 0, 100, 0, 0.6f);
         //************************************************
 
 
@@ -117,11 +121,15 @@ public class Main {
 
         //**************** LIGHTS ************************
         List<Light> lights = new ArrayList<>();
-        Light light = new Light(new Vector3f(0, 10000, -7000), new Vector3f(1, 1, 1));
-        lights.add(light);
+        lights.add(new Light(new Vector3f(0, 1000, -7000), new Vector3f(0.4f, 0.4f, 0.4f)));
 
-        lights.add(new Light(new Vector3f(-200, 10, -200), new Vector3f(10, 1, 1)));
-        lights.add(new Light(new Vector3f(200, 10, 200), new Vector3f(1, 1, 10)));
+        lights.add(new Light(new Vector3f(185, 10, -293), new Vector3f(2, 0, 0), new Vector3f(1, 0.01f, 0.002f)));
+        lights.add(new Light(new Vector3f(370, 17, -300), new Vector3f(0, 2, 2), new Vector3f(1, 0.01f, 0.002f)));
+        lights.add(new Light(new Vector3f(293, 7, -305), new Vector3f(2, 2, 0), new Vector3f(1, 0.01f, 0.002f)));
+
+        entities.add(new Entity(lamp, new Vector3f(185, -4.7f, -293), 0, 0, 0, 1));
+        entities.add(new Entity(lamp, new Vector3f(370, 4.2f, -300), 0, 0, 0, 1));
+        entities.add(new Entity(lamp, new Vector3f(293, -6.8f, -305), 0, 0, 0, 1));
         //************************************************
 
         Camera camera = new Camera(player);

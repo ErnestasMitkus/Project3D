@@ -23,7 +23,7 @@ public class MasterRenderer {
     private static final float NEAR_PLANE = 0.1f; //Minimum near you can see
     private static final float FAR_PLANE = 1000; //How far you can see
 
-    private static final Color SKY_COLOR = new Color(100, 255/2, 255/2);
+    private static final Color SKY_COLOR = new Color(20, 20, 20);
 
     private Matrix4f projectionMatrix;
 
