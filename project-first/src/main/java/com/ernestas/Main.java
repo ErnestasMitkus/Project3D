@@ -4,11 +4,8 @@ import com.ernestas.entities.Camera;
 import com.ernestas.entities.Entity;
 import com.ernestas.entities.Light;
 import com.ernestas.models.TexturedModel;
-import com.ernestas.renderEngine.DisplayManager;
-import com.ernestas.renderEngine.Loader;
+import com.ernestas.renderEngine.*;
 import com.ernestas.models.RawModel;
-import com.ernestas.renderEngine.OBJLoader;
-import com.ernestas.renderEngine.Renderer;
 import com.ernestas.shaders.StaticShader;
 import com.ernestas.textures.ModelTexture;
 import org.lwjgl.opengl.Display;
@@ -21,8 +18,6 @@ public class Main {
         DisplayManager.createDisplay();
 
         Loader loader = new Loader();
-        StaticShader shader = new StaticShader();
-        Renderer renderer = new Renderer(shader);
 
 
         RawModel model = OBJLoader.loadObjModel("dragon", loader);
@@ -38,20 +33,20 @@ public class Main {
 
         Camera camera = new Camera();
 
+        MasterRenderer renderer = new MasterRenderer();
+
         while (!Display.isCloseRequested()) {
-            entity.increaseRotation(0, 1, 0);
-            renderer.prepare();
             camera.move();
-            shader.start();
-            shader.loadLight(light);
-            shader.loadViewMatrix(camera);
-            renderer.render(entity, shader);
-            shader.stop();
+
+            // render all entities here
+            renderer.processEntity(entity);
+
+            renderer.render(light, camera);
             DisplayManager.updateDisplay();
 
         }
 
-        shader.cleanUp();
+        renderer.cleanUp();
         loader.cleanUp();
         DisplayManager.closeDisplay();
     }
