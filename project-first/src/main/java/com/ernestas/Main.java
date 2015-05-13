@@ -106,13 +106,10 @@ public class Main {
 
         //**************** GUIS ************************
         List<GuiTexture> guis = new ArrayList<>();
-        GuiTexture gui = new GuiTexture(loader.loadTexture("socuwan"),
-            new Vector2f(0.5f, 0.5f), new Vector2f(0.25f, 0.25f));
-        GuiTexture gui2 = new GuiTexture(loader.loadTexture("thinmatrix"),
-            new Vector2f(0.3f, 0.58f), new Vector2f(0.4f, 0.4f));
+        GuiTexture gui = new GuiTexture(loader.loadTexture("health"),
+            new Vector2f(-0.76f, 0.92f), new Vector2f(0.2f, 0.25f));
 
-//        guis.add(gui);
-//        guis.add(gui2);
+        guis.add(gui);
 
         GuiRenderer guiRenderer = new GuiRenderer(loader);
         //**********************************************
