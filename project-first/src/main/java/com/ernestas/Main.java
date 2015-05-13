@@ -3,6 +3,7 @@ package com.ernestas;
 import com.ernestas.entities.Camera;
 import com.ernestas.entities.Entity;
 import com.ernestas.entities.Light;
+import com.ernestas.entities.Player;
 import com.ernestas.models.TexturedModel;
 import com.ernestas.objConverter.ModelData;
 import com.ernestas.objConverter.OBJFileLoader;
@@ -92,8 +93,16 @@ public class Main {
         }
         //************************************************
 
+        //**************** PLAYER ************************
+        TexturedModel stanfordBunny = new TexturedModel(loader.loadToVAO(OBJFileLoader.loadOBJ("stanfordBunny")),
+                new ModelTexture(loader.loadTexture("white")));
+        Player player = new Player(stanfordBunny, new Vector3f(100, 0, -50), 0, 0, 0, 1);
+        //************************************************
+
         while (!Display.isCloseRequested()) {
             camera.move();
+            player.move();
+            renderer.processEntity(player);
 
             for (Terrain terrain : terrains) {
                 renderer.processTerrain(terrain);
