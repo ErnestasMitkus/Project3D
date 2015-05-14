@@ -14,6 +14,7 @@ import com.ernestas.textures.ModelTexture;
 import com.ernestas.textures.TerrainTexture;
 import com.ernestas.textures.TerrainTexturePack;
 import com.ernestas.toolbox.MousePicker;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -126,21 +127,31 @@ public class Main {
 
         lights.add(new Light(new Vector3f(185, 10, -293), new Vector3f(2, 0, 0), new Vector3f(1, 0.01f, 0.002f)));
         lights.add(new Light(new Vector3f(370, 17, -300), new Vector3f(0, 2, 2), new Vector3f(1, 0.01f, 0.002f)));
-        lights.add(new Light(new Vector3f(293, 7, -305), new Vector3f(2, 2, 0), new Vector3f(1, 0.01f, 0.002f)));
+//        lights.add(new Light(new Vector3f(293, 7, -305), new Vector3f(2, 2, 0), new Vector3f(1, 0.01f, 0.002f)));
 
         entities.add(new Entity(lamp, new Vector3f(185, -4.7f, -293), 0, 0, 0, 1));
         entities.add(new Entity(lamp, new Vector3f(370, 4.2f, -300), 0, 0, 0, 1));
         entities.add(new Entity(lamp, new Vector3f(293, -6.8f, -305), 0, 0, 0, 1));
+
+        Entity lampEntity = new Entity(lamp, new Vector3f(215, -4.7f, -293), 0, 0, 0, 1);
+        Light light = new Light(new Vector3f(215, 10, -293), new Vector3f(0, 2, 2), new Vector3f(1, 0.01f, 0.002f));
+
+        entities.add(lampEntity);
+        lights.add(light);
         //************************************************
 
         Camera camera = new Camera(player);
-        MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix());
+        MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix(), terrains);
 
         while (!Display.isCloseRequested()) {
             camera.move();
             player.move(Terrain.getCurrentTerrain(terrains, player.getPosition().x, player.getPosition().z));
             picker.update();
-            System.out.println(picker.getCurrentRay());
+            Vector3f terrainPoint = picker.getCurrentTerrainPoint();
+            if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) && terrainPoint != null) {
+                lampEntity.setPosition(terrainPoint);
+                light.setPosition(new Vector3f(terrainPoint.x, terrainPoint.y + 15, terrainPoint.z));
+            }
 
             renderer.processEntity(player);
 
