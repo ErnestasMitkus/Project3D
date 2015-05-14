@@ -13,6 +13,7 @@ import com.ernestas.terrains.Terrain;
 import com.ernestas.textures.ModelTexture;
 import com.ernestas.textures.TerrainTexture;
 import com.ernestas.textures.TerrainTexturePack;
+import com.ernestas.toolbox.MousePicker;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -133,10 +134,14 @@ public class Main {
         //************************************************
 
         Camera camera = new Camera(player);
+        MousePicker picker = new MousePicker(camera, renderer.getProjectionMatrix());
 
         while (!Display.isCloseRequested()) {
             camera.move();
             player.move(Terrain.getCurrentTerrain(terrains, player.getPosition().x, player.getPosition().z));
+            picker.update();
+            System.out.println(picker.getCurrentRay());
+
             renderer.processEntity(player);
 
             for (Terrain terrainObj : terrains) {
