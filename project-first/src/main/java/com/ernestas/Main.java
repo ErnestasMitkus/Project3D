@@ -28,7 +28,7 @@ public class Main {
         DisplayManager.createDisplay();
 
         Loader loader = new Loader();
-        MasterRenderer renderer = new MasterRenderer();
+        MasterRenderer renderer = new MasterRenderer(loader);
 
 
         //*******************TERRAIN TEXTURE STUFF******************
