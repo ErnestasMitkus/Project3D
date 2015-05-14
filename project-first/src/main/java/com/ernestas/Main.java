@@ -24,6 +24,11 @@ import java.util.List;
 import java.util.Random;
 
 public class Main {
+    /**
+     * Compile with maven:
+     * clean compile assembly:single
+     *
+     **/
 
     public static void main(String args[]) {
 
