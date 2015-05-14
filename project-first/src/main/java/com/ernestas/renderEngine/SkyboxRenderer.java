@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 public class SkyboxRenderer {
 
@@ -72,9 +73,10 @@ public class SkyboxRenderer {
         shader.stop();
     }
 
-    public void render(Camera camera) {
+    public void render(Camera camera, Vector3f fogColor) {
         shader.start();
         shader.loadViewMatrix(camera);
+        shader.loadFogColor(fogColor);
         GL30.glBindVertexArray(cube.getVaoID());
         GL20.glEnableVertexAttribArray(0);
         GL13.glActiveTexture(GL13.GL_TEXTURE0);

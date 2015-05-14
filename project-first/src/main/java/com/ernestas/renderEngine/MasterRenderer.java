@@ -11,6 +11,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class MasterRenderer {
     private static final float NEAR_PLANE = 0.1f; //Minimum near you can see
     private static final float FAR_PLANE = 1000; //How far you can see
 
-    private static final Color FOG_COLOR = new Color((int)(0.5444f * 256), (int)(0.62f * 256), (int)(0.69f * 256));
+    private static final Vector3f FOG_COLOR = new Vector3f(0.5444f, 0.62f, 0.69f);
 
     private Matrix4f projectionMatrix;
 
@@ -60,20 +61,20 @@ public class MasterRenderer {
         prepare();
 
         entityShader.start();
-        entityShader.loadSkyColor(FOG_COLOR.getRed() / 255f, FOG_COLOR.getBlue() / 255f, FOG_COLOR.getGreen() / 255f);
+        entityShader.loadSkyColor(FOG_COLOR);
         entityShader.loadLights(lights);
         entityShader.loadViewMatrix(camera);
         entityRenderer.render(entities);
         entityShader.stop();
 
         terrainShader.start();
-        terrainShader.loadSkyColor(FOG_COLOR.getRed() / 255f, FOG_COLOR.getBlue() / 255f, FOG_COLOR.getGreen() / 255f);
+        terrainShader.loadSkyColor(FOG_COLOR);
         terrainShader.loadLights(lights);
         terrainShader.loadViewMatrix(camera);
         terrainRenderer.render(terrains);
         terrainShader.stop();
 
-        skyboxRenderer.render(camera);
+        skyboxRenderer.render(camera, FOG_COLOR);
 
         entities.clear();
         terrains.clear();
@@ -104,7 +105,7 @@ public class MasterRenderer {
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 
-        GL11.glClearColor(FOG_COLOR.getRed() / 255f, FOG_COLOR.getBlue() / 255f, FOG_COLOR.getGreen() / 255f, 1);
+        GL11.glClearColor(FOG_COLOR.x, FOG_COLOR.y, FOG_COLOR.z, 1);
     }
 
     private void createProjectionMatrix() {

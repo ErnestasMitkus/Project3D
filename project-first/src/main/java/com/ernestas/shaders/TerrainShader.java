@@ -74,8 +74,8 @@ public class TerrainShader extends ShaderProgram {
         super.loadInt(locationBlendMap, 4);
     }
 
-    public void loadSkyColor(float r, float g, float b) {
-        super.loadVector(locationSkyColor, new Vector3f(r, g, b));
+    public void loadSkyColor(Vector3f fogColor) {
+        super.loadVector(locationSkyColor, fogColor);
     }
 
     public void loadShineVariables(float damper, float reflectivity) {
